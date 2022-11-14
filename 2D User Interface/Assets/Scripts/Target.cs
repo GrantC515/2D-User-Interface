@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Target : MonoBehaviour
 {
     public int PointValue = 1;
@@ -39,6 +40,7 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
+        _gameManager.UpdateScore(PointValue);
         Destroy(this.gameObject);
     }
 
