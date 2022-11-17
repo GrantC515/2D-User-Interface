@@ -9,12 +9,15 @@ public class GameManager : MonoBehaviour
 {
     public bool IsGameActive = true;
     public int Score = 0;
+    public float SpawnRate = 1;
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI GameOverText;
-    public TextMeshProUGUI GameTitleText;
-    public Button StartButton;
+    //public TextMeshProUGUI GameTitleText;
+    public GameObject StartScene;
+    //public Button StartButton;
     public Button RestartButton;
     public List<GameObject> Target;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +25,15 @@ public class GameManager : MonoBehaviour
         IsGameActive = false;
     }
 
-    public void StartGame()
+    public void StartGame(int difficulty)
     {
-        GameTitleText.gameObject.SetActive(false);
-        StartButton.gameObject.SetActive(false);
+        //GameTitleText.gameObject.SetActive(false);
+        //StartButton.gameObject.SetActive(false);
+        StartScene.gameObject.SetActive(false);
         ScoreText.gameObject.SetActive(true);
         IsGameActive = true;
         ScoreText.text = "Score: " + Score;
+        SpawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
     }
 
@@ -55,7 +60,7 @@ public class GameManager : MonoBehaviour
     {
         while(IsGameActive)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(SpawnRate);
             int index = Random.Range(0, Target.Count);
             Instantiate(Target[index]);
         }
